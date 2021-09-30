@@ -23,4 +23,7 @@ endif()
 # ----------------------------------------------- #
 
 add_executable(TheLastResort-Client "main.cpp")
-target_link_libraries(TheLastResort-Client sfml)
+target_link_libraries(TheLastResort-Client sfml-audio sfml-system sfml-window sfml-network sfml-graphics)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets
+	 DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
