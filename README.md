@@ -1,1 +1,1 @@
-# TheLastResort-Client
+# TheLastResort-Client [W.I.P]
