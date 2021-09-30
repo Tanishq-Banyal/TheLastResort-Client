@@ -1,4 +1,6 @@
-#include <cmath>
+#include <SFML/Audio/AlResource.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundRecorder.hpp>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -9,7 +11,7 @@
 #include <SFML/Network.hpp>
 #include <SFML/Graphics.hpp>
 
-using std::cout, std::endl;
+using std::cout, std::endl, std::string;
 
 #define WIDTH  800
 #define HEIGHT 500
@@ -25,22 +27,33 @@ int main(int argc, char* argv[])
 	sf::Texture img_mic_on, img_mic_off, img_mic_err;
 	img_mic_on.loadFromFile("assets/mic_on.png");
 	img_mic_off.loadFromFile("assets/mic_off.png");
-	img_mic_err. loadFromFile("assets/mic_err.png");
+	img_mic_err.loadFromFile("assets/mic_err.png");
 
 	/* -------------------------------------------------- */
 
-	sf::Sprite mic_button(img_mic_err);
+	sf::Sprite mic_b(img_mic_err);
+
+	bool muted = true;
+	bool HasMic = sf::SoundRecorder::isAvailable();
+	if (HasMic)
+	{
+		mic_b.setTexture(img_mic_off);
+		string MicName = sf::SoundRecorder::getDefaultDevice();
+	}
+	else
+	{
+		mic_b.setTexture(img_mic_err);
+		string MicName = "No Microphone Detected";
+	}
 
 	auto adjustPositions = [&]()
 	{
-		auto winsize = window.getSize();
-		unsigned x = winsize.x;
-		unsigned y = winsize.y;
-
-		view.setSize(x, y);
+		auto win_size = window.getSize();
+		view.setSize(win_size.x, win_size.y);
 		window.setView(view);
-		mic_button.setScale(.5f,.3f);
-		mic_button.setPosition(x/2-100, y/2-100);
+
+		auto mic_b_size = mic_b.getTexture()->getSize();
+		mic_b.setPosition((win_size.x-mic_b_size.x)/2, (win_size.y-mic_b_size.y)/2);
 	};
 
 	while (window.isOpen())
@@ -56,7 +69,7 @@ int main(int argc, char* argv[])
 
 		window.clear(sf::Color(40,40,60,255));
 
-		window.draw(mic_button);
+		window.draw(mic_b);
 
 		window.display();
 	}
