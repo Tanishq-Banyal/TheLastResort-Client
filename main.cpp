@@ -1,6 +1,3 @@
-#include <SFML/Audio/AlResource.hpp>
-#include <SFML/Audio/Sound.hpp>
-#include <SFML/Audio/SoundRecorder.hpp>
 #include <string>
 #include <vector>
 #include <iostream>
