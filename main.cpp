@@ -1,3 +1,5 @@
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/View.hpp>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -17,7 +19,7 @@ int main(int argc, char* argv[])
 {
 	sf::Event event;
 	sf::View view; view.setSize(WIDTH, HEIGHT);
-	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Test Window");
+	sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "TheLastResort-Client");
 
 	/* ------------ Loading Assets into Vram ------------ */
 
@@ -29,6 +31,7 @@ int main(int argc, char* argv[])
 	/* -------------------------------------------------- */
 
 	sf::Sprite mic_b(img_mic_err);
+	mic_b.scale(0.5, 0.5);
 
 	bool muted = true;
 	bool HasMic = sf::SoundRecorder::isAvailable();
@@ -46,11 +49,11 @@ int main(int argc, char* argv[])
 	auto adjustPositions = [&]()
 	{
 		auto win_size = window.getSize();
-		view.setSize(win_size.x, win_size.y);
+		view.reset(sf::FloatRect(0, 0, win_size.x, win_size.y));
 		window.setView(view);
 
 		auto mic_b_size = mic_b.getTexture()->getSize();
-		mic_b.setPosition((win_size.x-mic_b_size.x)/2, (win_size.y-mic_b_size.y)/2);
+		mic_b.setPosition((win_size.x-mic_b_size.x)*1.f/4.f, (win_size.y-mic_b_size.y)*5.f/5.f);
 	};
 
 	while (window.isOpen())

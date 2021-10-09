@@ -9,10 +9,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # --------------COMPILER SPECIFIC---------------- #
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-	set(CMAKE_CXX_FLAGS "-O3 -Wall -flto -stdlib=libc++")
+	set(CMAKE_CXX_FLAGS "-O3 -Wall -flto -fsanitize=address -stdlib=libc++")
 
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-	set(CMAKE_CXX_FLAGS "-O3 -Wall -flto -s")
+	set(CMAKE_CXX_FLAGS "-O3 -Wall -flto -fsanitize=address -s")
 
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 #	Nobody Uses Windows Anyways ;)
@@ -23,6 +23,10 @@ endif()
 # ----------------------------------------------- #
 
 add_executable(TheLastResort-Client "main.cpp")
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/CNGui)
+target_link_libraries(cngui)
+
 target_link_libraries(TheLastResort-Client sfml-audio sfml-system sfml-window sfml-network sfml-graphics)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets

@@ -2,6 +2,7 @@
 .cache/
 .vscode/
 build/
+examples/
 # Prerequisites
 *.d
 
